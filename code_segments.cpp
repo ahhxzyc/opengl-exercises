@@ -8,7 +8,7 @@ void checkCompile(GLuint shaderId, int shaderType) {
             std::cout << "ERROR: LINK\n" << log << std::endl;
         }
     } else {
-        char *type;
+        const char *type;
         if (shaderType == 1)    type = "VERTEX";
         else                    type = "FRAGMENT";
         glGetShaderiv(shaderId, GL_COMPILE_STATUS, &success);
@@ -64,4 +64,11 @@ void drawLine(float *p, float *q) {
     glUseProgram(program);
     glPointSize(5.f);
     glDrawArrays(GL_LINE_STRIP, 0, 2);
+    // Cleanup
+    glDeleteBuffers(1, &vbuffer);
+    glBindVertexArray(0);
+    glDeleteVertexArrays(1, &vao);
+    glDeleteShader(vshader);
+    glDeleteShader(fshader);
+    glDeleteProgram(program);
 }
